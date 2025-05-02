@@ -1,0 +1,47 @@
+#version: "3.9"
+services:
+  GantsevichUS-netology-prometheus:
+    image: prom/prometheus:v3.3.0
+    volumes: 
+      - ./prometheus:/etc/prometheus/
+      -  prometheus-data:/prometheus
+    networks:
+      - GantsevichUS-my-netology-hw
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+  GantsevichUS-netology-pushgateway:
+    image: prom/pushgateway:v1.11.1
+    networks:
+      - GantsevichUS-my-netology-hw
+    ports:
+    - 9091:9091
+    depends_on:
+      - GantsevichUS-netology-prometheus
+    restart: unless-stopped
+  GantsevichUS-netology-grafana:
+    image: grafana/grafana:11.6.1
+    volumes:
+      - ./grafana/:/etc/grafana/
+      - grafana-data:/grafana
+    environment:
+      - GF_PATHS_CONFIG=/etc/grafana/custom.ini
+    networks:
+      - GantsevichUS-my-netology-hw
+    ports:
+      - 80:3000
+    depends_on:
+      - GantsevichUS-netology-prometheus
+    restart: unless-stopped
+
+
+networks:
+  GantsevichUS-my-netology-hw:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "10.5.0.0/16"
+
+volumes:
+   prometheus-data:
+   grafana-data:
