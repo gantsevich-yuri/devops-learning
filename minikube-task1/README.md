@@ -48,8 +48,47 @@ spec:
  * создайте Service, который будет направлять трафик на этот Deployment;
  * версия образа redis должна быть зафиксирована на 6.0.13.
 
-2. Запустите Deployment в своём кластере и добейтесь его стабильной работы.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: master
+          image: bitnami/redis:6.0.13
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+          ports:
+            - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+  type: ClusterIP
+```
 
+2. Запустите Deployment в своём кластере и добейтесь его стабильной работы.
+![task2](task2.png)
 
 ### Задание 3
 
