@@ -101,6 +101,13 @@ spec:
  - удаления контейнера;
  - проброса порта локальной машины в контейнер для отладки.
 
+ ```
+kubectl exec -it redis-54457d549d-9x67m -- ps aux
+kubectl logs redis-54457d549d-9x67m --since=5m
+kubectl delete pod redis-54457d549d-9x67m
+kubectl port-forward svc/redis-service 6379:6379
+ ```
+
 ### Задание 4
 
 Есть конфигурация nginx:
