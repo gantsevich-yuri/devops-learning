@@ -48,9 +48,6 @@ sudo systemctl enable cri-docker.socket
 sudo systemctl start cri-docker.socket
 sudo systemctl enable cri-docker.service
 sudo systemctl start cri-docker.service
-
-#check cri-dockerd
-sudo systemctl status cri-docker.service
 ```
 
 ```
@@ -74,7 +71,18 @@ sudo systemctl enable --now kubelet
 
 ```
 # Run Kubernetes master 
-sudo kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock
+sudo kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock \
+--apiserver-advertise-address=master_internal_ip \
+--apiserver-cert-extra-sans=master_external_ip
+```
+
+```
+# To start using your cluster, you need to run the following as a regular user:
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
 ```
 
 ```
@@ -83,9 +91,15 @@ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/
 ```
 
 ```
-sudo kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock
-kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+# Forward ip packet
+sudo -i
+sudo modprobe br_netfilter
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+sysctl -p /etc/sysctl.conf
 ```
+
+![task1](task1.png)
 
 ### Задание 2
 
