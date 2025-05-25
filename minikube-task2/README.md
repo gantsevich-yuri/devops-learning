@@ -73,6 +73,7 @@ sudo systemctl enable --now kubelet
 # Run Kubernetes master 
 sudo kubeadm init --cri-socket unix:///var/run/cri-dockerd.sock \
 --apiserver-advertise-address=master_internal_ip \
+--pod-network-cidr 10.244.0.0/16 \
 --apiserver-cert-extra-sans=master_external_ip
 ```
 
@@ -137,6 +138,10 @@ spec:
 1. Вынесите все нужные, на ваш взгляд, параметры в `values.yaml`.
 1. Запустите чарт в своём кластере и добейтесь его стабильной работы.
 
+```
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+helm create my-redis
+```
 
 ### Задание 3*
 
