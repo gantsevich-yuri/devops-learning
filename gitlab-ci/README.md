@@ -9,7 +9,7 @@
 
 В качестве ответа в репозиторий шаблона с решением добавьте скриншоты с настройками раннера в проекте.
 
-/srv/gitlab-runner/config/config.toml
+**/srv/gitlab-runner/config/config.toml**
 ```
 concurrent = 3
 check_interval = 0
@@ -42,7 +42,29 @@ shutdown_timeout = 0
  * файл gitlab-ci.yml для своего проекта или вставьте код в соответствующее поле в шаблоне; 
  * скриншоты с успешно собранными сборками.
  
+```
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  image: golang:1.17
+  script: 
+   - go test 
+  tags:
+    - fox
+
+build:
+  stage: build
+  image: docker:latest
+  script:
+   - docker build .
+  tags:
+    - fox
+```
  
+
 ---
 ## Дополнительные задания* (со звёздочкой)
 
