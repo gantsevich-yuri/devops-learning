@@ -26,6 +26,16 @@ shutdown_timeout = 0
     image = "golang:1.17"
     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
 ```
+
+**run:**
+```
+   docker run -d --name gitlab-runner --restart always \
+     --network host \
+     -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+     -v /var/run/docker.sock:/var/run/docker.sock \
+     gitlab/gitlab-runner:latest
+```
+
 ![task1](task1.png)
 
 ---
