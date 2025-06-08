@@ -47,6 +47,9 @@ stages:
   - test
   - build
 
+variables:
+  APP_VERSION: "${CI_PIPELINE_IID}"
+
 test:
   stage: test
   image: golang:1.17
@@ -59,12 +62,13 @@ build:
   stage: build
   image: docker:latest
   script:
-   - docker build .
+   - docker build -t my_go_app:v${APP_VERSION} .
   tags:
     - fox
 ```
+![task2-1](task2-1.png)
  
-
+![task2-2](task2-2.png)
 ---
 ## Дополнительные задания* (со звёздочкой)
 
