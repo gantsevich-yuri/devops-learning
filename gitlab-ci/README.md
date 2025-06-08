@@ -84,3 +84,62 @@ build:
  - тесты запускались только при изменении файлов с расширением *.go.
 
 В качестве ответа добавьте в шаблон с решением файл gitlab-ci.yml своего проекта или вставьте код в соответсвующее поле в шаблоне.
+
+```
+stages:
+  - test
+  - build
+
+variables:
+  APP_VERSION: "${CI_PIPELINE_IID}"
+
+test:
+  stage: test
+  image: golang:1.17
+  script:
+   - go test
+  tags:
+    - fox
+
+build:
+  stage: build
+  image: docker:latest
+  script:
+   - docker build -t my_go_app:v${APP_VERSION} .
+  needs: []
+  tags:
+    - fox
+```
+
+![task3-1](task3-1.png)
+
+```
+stages:
+  - test
+  - build
+
+variables:
+  APP_VERSION: "${CI_PIPELINE_IID}"
+
+test:
+  stage: test
+  image: golang:1.17
+  script:
+   - go test
+  rules:
+    - changes:
+      - "*.go"
+  tags:
+    - fox
+
+build:
+  stage: build
+  image: docker:latest
+  script:
+   - docker build -t my_go_app:v${APP_VERSION} .
+  needs: []
+  tags:
+    - fox
+```
+
+![task3-2](task3-2.png)
