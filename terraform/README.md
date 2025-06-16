@@ -7,3 +7,5 @@
 ```
 cp .terraformrc ~/.terraformrc
 ```
+
+![services](services.png)
