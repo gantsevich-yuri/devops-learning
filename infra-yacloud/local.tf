@@ -10,5 +10,5 @@ resource "local_file" "invenory" {
   [webservers:vars]
   ansible_ssh_common_args='-o ProxyCommand="ssh -p 22 -W %h:%p -q fox@${yandex_compute_instance.bastion.network_interface.0.nat_ip_address}"'
   ABC
-  filename = file("./hosts.ini")
+  filename = "./hosts.ini"
 }
