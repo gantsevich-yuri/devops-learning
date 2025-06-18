@@ -21,6 +21,12 @@
 С помощью ansible подключиться к web-a и web-b , установить на них nginx.(написать нужный ansible playbook)
 Провести тестирование и приложить скриншоты развернутых в облаке ВМ, успешно отработавшего ansible playbook. 
 
+![VMS](VMs.png)
+
+![ansible](ansible_result.png)
+
+![nginx](nginx.png)
+
 ---
 ### Задание 3*
 
