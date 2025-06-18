@@ -1,5 +1,5 @@
-resource "yandex_vpc_security_group" "ALB" {
-  name        = "alb"
+resource "yandex_vpc_security_group" "BASTION" {
+  name        = "bastion"
   network_id  = yandex_vpc_network.devnet.id
 
   ingress {
