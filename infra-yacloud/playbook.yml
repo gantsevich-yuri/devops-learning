@@ -31,3 +31,80 @@
         name: nginx
         state: started
         enabled: yes
+
+- name: Install mysql on database VM
+  hosts: database
+  become: true
+  vars:
+    ansible_ssh_user: fox
+    mysql_root_password: P@ssw0rd
+    mysql_database: mydevdb
+
+  
+  pre_tasks:
+    - name: Validating the ssh port is open and
+      wait_for:
+        host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
+        port: 22
+        delay: 5
+        timeout: 300
+        state: started
+        search_regex: OpenSSH
+  
+  tasks:
+    - name: Install PyMySQL for Python 3
+      apt:
+        name: python3-pymysql
+        state: present 
+    
+    - name: Install debconf-utils package
+      apt:
+        name: debconf-utils
+        state: present
+    
+    - name: update APT cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    
+    - name: mysql install
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Check mysql run
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+    - name: Create mydevdb
+      community.mysql.mysql_db:
+        name: "{{ mysql_database }}"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+    
+    - name: Copy SQL dump file to VM
+      copy:
+        src: ./dump.sql
+        dest: /tmp/dump.sql
+    
+    - name: Insert data into mydevdb
+      community.mysql.mysql_db:
+        name: "{{ mysql_database }}"
+        state: import
+        target: /tmp/dump.sql
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+
+    - name: Check database exists
+      community.mysql.mysql_info:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+      register: mydevdb_info
+
+    - name: Display databases
+      debug:
+        msg: "Databases: {{ mydevdb_info.databases }}"
+  

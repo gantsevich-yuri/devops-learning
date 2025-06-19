@@ -36,6 +36,8 @@
 2. Установить на нее любую базу данных. 
 3. Выполнить проверку состояния запущенных служб через Ansible.
 
+![mysql](mysql.png)
+
 --- 
 ### Задание 4*
 Изучите [инструкцию](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart) yandex для terraform.
