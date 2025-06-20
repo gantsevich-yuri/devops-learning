@@ -46,6 +46,7 @@
 3. Выполните команду export YC_TOKEN=$(yc iam create-token) и в том же shell запустите terraform.
 4. Для того чтобы вам не нужно было каждый раз выполнять export - добавьте данную команду в самый конец файла ~/.bashrc
 
+![auth_token](auth_token_result.png)
 ---
 
 Дополнительные материалы: 
