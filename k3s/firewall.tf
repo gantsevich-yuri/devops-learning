@@ -1,6 +1,6 @@
 resource "yandex_vpc_security_group" "BASTION" {
   name        = "bastion"
-  network_id  = yandex_vpc_network.devnet.id
+  network_id  = yandex_vpc_network.k3s.id
 
   ingress {
     protocol       = "TCP"
@@ -20,7 +20,7 @@ resource "yandex_vpc_security_group" "BASTION" {
 
 resource "yandex_vpc_security_group" "LAN" {
   name        = "lan"
-  network_id  = yandex_vpc_network.devnet.id
+  network_id  = yandex_vpc_network.k3s.id
 
   ingress {
     protocol       = "ANY"

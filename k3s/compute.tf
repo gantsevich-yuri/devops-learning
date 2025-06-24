@@ -86,7 +86,7 @@ resource "yandex_compute_instance" "master" {
   }
 
   network_interface {
-    subnet_id          = yandex_vpc_subnet.dk3ssubnet_1.id
+    subnet_id          = yandex_vpc_subnet.k3ssubnet_1.id
     nat                = false
     security_group_ids = [yandex_vpc_security_group.LAN.id]
   }
@@ -121,7 +121,7 @@ resource "yandex_compute_instance" "worker" {
   }
 
   network_interface {
-    subnet_id          = yandex_vpc_subnet.k3ssubnet_1.id
+    subnet_id          = yandex_vpc_subnet.k3ssubnet_2.id
     nat                = false
     security_group_ids = [yandex_vpc_security_group.LAN.id]
   }

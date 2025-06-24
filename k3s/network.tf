@@ -3,17 +3,24 @@ resource "yandex_vpc_network" "k3s" {
   name = "devnet"
 }
 
-# Create VPC Subnet 1
-resource "yandex_vpc_subnet" "k3ssubnet_1" {
-  v4_cidr_blocks = ["10.0.10.0/24"]
+# Create VPC Public Subnet 1
+resource "yandex_vpc_subnet" "pubsubnet_1" {
+  v4_cidr_blocks = ["10.0.10/24"]
+  zone           = "ru-central1-a"
+  network_id     = yandex_vpc_network.k3s.id
+  route_table_id = yandex_vpc_route_table.k3sroute.id
+}
+# Create VPC Private Subnet 1
+resource "yandex_vpc_subnet" "privsubnet_1" {
+  v4_cidr_blocks = ["10.0.11/24"]
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.k3s.id
   route_table_id = yandex_vpc_route_table.k3sroute.id
 }
 
-# Create VPC Subnet 2
-resource "yandex_vpc_subnet" "k3ssubnet_2" {
-  v4_cidr_blocks = ["10.0.20.0/24"]
+# Create VPC Private Subnet 2
+resource "yandex_vpc_subnet" "privsubnet_2" {
+  v4_cidr_blocks = ["10.0.21.0/24"]
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.k3s.id
   route_table_id = yandex_vpc_route_table.k3sroute.id
