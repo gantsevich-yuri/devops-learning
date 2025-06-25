@@ -22,7 +22,7 @@ resource "yandex_vpc_subnet" "privsubnet_2" {
   v4_cidr_blocks = ["10.0.21.0/24"]
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.k3snet.id
-  route_table_id = yandex_vpc_route_table.k3sroute.id
+  #route_table_id = yandex_vpc_route_table.k3sroute.id
 }
 
 # Create VPC Route Table
