@@ -1,5 +1,5 @@
 # Create VPC Network
-resource "yandex_vpc_network" "k3snet" {
+resource "yandex_vpc_network" "k3s_net" {
   name = "k3snet"
 }
 
@@ -7,31 +7,37 @@ resource "yandex_vpc_network" "k3snet" {
 resource "yandex_vpc_subnet" "pubsubnet_1" {
   v4_cidr_blocks = ["10.0.10.0/24"]
   zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.k3snet.id
+  network_id     = yandex_vpc_network.k3s_net.id
 }
 # Create VPC Private Subnet 1
 resource "yandex_vpc_subnet" "privsubnet_1" {
   v4_cidr_blocks = ["10.0.11.0/24"]
   zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.k3snet.id
-  #route_table_id = yandex_vpc_route_table.k3sroute.id
+  network_id     = yandex_vpc_network.k3s_net.id
+  #route_table_id = yandex_vpc_route_table.k3s_route.id
 }
 
 # Create VPC Private Subnet 2
 resource "yandex_vpc_subnet" "privsubnet_2" {
   v4_cidr_blocks = ["10.0.21.0/24"]
   zone           = "ru-central1-b"
-  network_id     = yandex_vpc_network.k3snet.id
-  #route_table_id = yandex_vpc_route_table.k3sroute.id
+  network_id     = yandex_vpc_network.k3s_net.id
+  #route_table_id = yandex_vpc_route_table.k3s_route.id
+}
+
+# Create VPC Gateway
+resource "yandex_vpc_gateway" "k3s_gw" {
+  name = "k3s gateway"
+  shared_egress_gateway {}
 }
 
 # Create VPC Route Table
-resource "yandex_vpc_route_table" "k3sroute" {
-  name       = "devroute"
-  network_id = yandex_vpc_network.k3snet.id
+resource "yandex_vpc_route_table" "k3s_route" {
+  name       = "k3s route"
+  network_id = yandex_vpc_network.k3s_net.id
 
   static_route {
     destination_prefix = "0.0.0.0/0"
-    next_hop_address   = yandex_compute_instance.bastion.network_interface.0.ip_address
+    gateway_id   = yandex_vpc_gateway.k3s_gw.id
   }
 }

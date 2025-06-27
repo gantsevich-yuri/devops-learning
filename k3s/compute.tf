@@ -30,44 +30,8 @@ resource "yandex_compute_instance" "bastion" {
   }
 
   metadata = {
-    user-data = <<EOF
-    Content-Type: multipart/mixed; boundary="==XYZ="
-    MIME-Version: 1.0
-
-    --==XYZ==
-    Content-Type: text/cloud-config; charset="us-ascii"
-
-    #cloud-config
-    users:
-      - name: k3s
-        groups: sudo
-        shell: /bin/bash
-        sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-        lock_passwd: false
-        passwd: "$6$GPeSaWph7xZj9MLD$WIkpzGpWdAuuiKfkDd7.VuzFnDtf2Qn5oY9ONg6WQfAPJbJMC8py.jnxi2gv7UaAAEfirio1DJWtLptue6AFf."
-        ssh_authorized_keys:
-          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPOed+sy3bqMgsKU8ilo+eN289OHlLUM1/xcQ2Ti9eU/ yuri@ubuntu-work
-    write_files:
-      - path: /etc/ssh/sshd_config.d/99-custom.conf
-      content: |
-        PasswordAuthentication yes
-        PermitRootLogin no
-    runcmd:
-      - systemctl reload sshd  
-
-    --==XYZ==
-    Content-Type: text/x-shellscript; charset="us-ascii"
-
-    #!/bin/bash
-    apt update -y
-    apt install -y iptables-persistent
-    sysctl -w net.ipv4.ip_forward=1
-    iptables -t nat -A POSTROUTING -o eth0 -s 0.0.0.0/0 -j MASQUERADE
-    netfilter-persistent save
-    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-
-    --==XYZ==--
-    EOF
+    user-data          = file("./cloud-init.yml")
+    serial-port-enable = "1"
   }
 
   scheduling_policy { preemptible = true }
@@ -82,7 +46,7 @@ resource "yandex_compute_instance" "master" {
 
   resources {
     cores         = 2
-    memory        = 2
+    memory        = 1
     core_fraction = 20
   }
 
