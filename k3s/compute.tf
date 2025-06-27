@@ -43,10 +43,11 @@ resource "yandex_compute_instance" "master" {
   hostname    = "master"
   platform_id = "standard-v3"
   zone        = "ru-central1-a"
+  allow_stopping_for_update = true
 
   resources {
     cores         = 2
-    memory        = 1
+    memory        = 2
     core_fraction = 20
   }
 

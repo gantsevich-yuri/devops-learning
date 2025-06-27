@@ -1,7 +1,7 @@
 **install k3s as master**
 ```
 sudo curl -Lo /usr/local/bin/k3s https://github.com/k3s-io/k3s/releases/download/v1.26.5+k3s1/k3s; sudo chmod a+x /usr/local/bin/k3s
-sudo K3S_KUBECONFIG_MODE="644" k3s server &
+sudo k3s server &
 sudo k3s kubectl get node
 ```
 
@@ -14,32 +14,31 @@ sudo k3s agent \
   --token <NODE_TOKEN> &
 ```
 
-**Add k3s in systemd if need**
+**Install kubectl**
+# Deb-based
 ```
-sudo systemctl enable k3s
-sudo systemctl start k3s
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
 ```
+
+**Access to Kubernetes cluster from bastion**
+- mkdir ~/.kube
+- ssh <ip_k8s-master> 'sudo cat /etc/rancher/k3s/k3s.yaml' > ~/.kube/config
+- ssh ssh -fN -L 6443:<ip_k8s-master>:6443 username_k8s-master@ip_k8s-master    # set ssh tunnel
+- kubectl get nodes
 
 **Access to Kubernetes cluster from local machine**
-
-for Yandex Cloud:
-- ssh -J bastion k8s-master 'sudo cat /etc/rancher/k3s/k3s.yaml' > ~/.kube/config_yc
-- in ~/.kube/config-aws set server: https://127.0.0.1:6443     
-- ssh -N -L 6443:<MASTER_PRIVATE_IP>:6443 ubuntu@<BASTION_IP>  # set ssh tunnel
-- KUBECONFIG=~/.kube/config_yc kubectl get nodes
-
-for AWS:
-- ssh -J ec2-user@<BASTION_IP> ubuntu@<MASTER_PRIVATE_IP> 'sudo cat /etc/rancher/k3s/k3s.yaml > ~/.kube/config_aws
-- in ~/.kube/config-aws set server: https://127.0.0.1:6443
-- ssh -i key.pem -L 6443:10.0.1.10:6443 ec2-user@<BASTION_IP>  # set ssh tunnel
-- KUBECONFIG=~/.kube/config_aws kubectl get nodes
-
+- ssh -i yacloud_k8s -J k3s@158.160.35.0 k3s@10.0.11.12 'sudo cat /etc/rancher/k3s/k3s.yaml' > ~/.kube/config_k3s
+- ssh -fN -L 6443:127.0.0.1:6443 -J k3s@158.160.35.0 k3s@10.0.11.12   # set ssh tunnel
+- KUBECONFIG=~/.kube/config_k3s kubectl get nodes
 
 **Deploy pod with Nginx app**
 ```
 kubectl apply -f https://k8s.io/examples/pods/simple-pod.yaml
 ```
 **or Nginx + Services:**
+
 nginx-pod.yaml 
 ```
 apiVersion: v1
@@ -80,3 +79,7 @@ sudo k3s kubectl get pods -A
 sudo systemctl stop k3s
 /usr/local/bin/k3s-uninstall.sh
 ```
+
+**Result**
+
+![k3s](k3s_nginx.png)
