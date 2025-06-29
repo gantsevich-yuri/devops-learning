@@ -1,0 +1,45 @@
+---
+- name: TASK 1-2
+  hosts: all
+  become: true
+  vars:
+    user: fox
+    welcome: "Hello {{ user }}, have a good day!"
+  tasks:
+
+  - name: Create directory
+    ansible.builtin.file:
+      path: /home/{{ user }}/apache
+      state: directory
+  
+  - name: Download Apache
+    ansible.builtin.get_url:
+      url: https://dlcdn.apache.org/kafka/3.9.1/kafka_2.13-3.9.1.tgz
+      dest: /home/{{ user }}/apache/kafka.tgz
+    
+  - name: Unpacking Apache archive
+    ansible.builtin.unarchive:
+      src: /home/{{ user }}/apache/kafka.tgz
+      dest: /home/{{ user }}/apache/ 
+  
+  - name: Install tuned packet
+    ansible.builtin.package:
+      name: tuned
+      state: present 
+  
+  - name: Enable service tuned
+    ansible.builtin.systemd_service:
+      name: tuned
+      enabled: true
+      state: started
+
+  - name: MOTD
+    ansible.builtin.copy:
+      content: |
+        #!/bin/bash
+        echo "Hostname:{{ ansible_facts['nodename'] }}"
+        echo "IP_addr:  {{ ansible_facts.all_ipv4_addresses | join(', ') }}"
+        echo "{{ welcome }}"
+      dest: /etc/update-motd.d/01-mycustom-motd
+      mode: '0755'
+
