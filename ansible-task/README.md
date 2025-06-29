@@ -45,4 +45,5 @@
 **Полезные команды:**
 ```
 ansible-config init --disabled -t all > ansible.cfg   # Generating ansible.cfg
+ansible <hostname> -m ansible.builtin.setup           # Gathere information about host
 ```

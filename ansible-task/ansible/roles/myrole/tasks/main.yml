@@ -1,2 +1,11 @@
 ---
 # tasks file for myrole
+- name: Install Apache
+  ansible.builtin.package:
+    name: apache2
+    state: present
+
+- name: Create index.html file
+  ansible.builtin.file:
+      path: /home/{{ user }}/apache
+      state: file
