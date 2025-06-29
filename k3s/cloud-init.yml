@@ -4,5 +4,16 @@ users:
     groups: sudo
     shell: /bin/bash
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    lock_passwd: false
+    passwd: "$6$GPeSaWph7xZj9MLD$WIkpzGpWdAuuiKfkDd7.VuzFnDtf2Qn5oY9ONg6WQfAPJbJMC8py.jnxi2gv7UaAAEfirio1DJWtLptue6AFf."
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPOed+sy3bqMgsKU8ilo+eN289OHlLUM1/xcQ2Ti9eU/ yuri@ubuntu-work
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-custom.conf
+    content: |
+      PasswordAuthentication yes
+      PermitRootLogin no
+
+runcmd:
+  - systemctl reload sshd  
