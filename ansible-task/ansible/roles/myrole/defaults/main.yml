@@ -1,2 +1,23 @@
 ---
-# defaults file for myrole
+- name: Install apache
+  ansible.builtin.package:
+    name: apache2
+    state: present
+
+- name: Enable service apache2
+  ansible.builtin.systemd_service:
+    name: apache2
+    enabled: true
+    state: started
+
+- name: Set new index.html file
+  ansible.builtin.template:
+    src: templates/apache.conf.j2
+    dest: /var/www/html/index.html
+    notify:
+      - Restart apache2
+  handlers:
+    name: Restart apache2
+    service:
+      name: 
+    
