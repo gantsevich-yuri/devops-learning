@@ -27,3 +27,24 @@ resource "yandex_vpc_gateway" "devnet_natgw" {
   name = "devnet-natgw"
   shared_egress_gateway {}
 }
+
+# Firewall
+resource "yandex_vpc_security_group" "BASTION" {
+  name       = "bastion"
+  network_id = yandex_vpc_network.devnet.id
+
+  ingress {
+    protocol       = "TCP"
+    description    = "to bastion"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    port           = 22
+  }
+
+  egress {
+    protocol       = "ANY"
+    description    = "from bastion"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    from_port      = 0
+    to_port        = 65535
+  }
+}

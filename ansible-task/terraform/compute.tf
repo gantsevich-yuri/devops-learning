@@ -2,13 +2,6 @@ data "yandex_compute_image" "dev_image" {
   family = "ubuntu-2204-lts"
 }
 
-data "template_file" "cloud_config" {
-  template = file("${path.module}/cloud-init.tpl")
-  vars = {
-    ssh_key = file("/home/yuri/.ssh/yacloud_terraform.pub")
-  }
-}
-
 resource "yandex_compute_instance" "vm1" {
   name        = "vm1"
   platform_id = "standard-v3"
@@ -29,12 +22,13 @@ resource "yandex_compute_instance" "vm1" {
   }
 
   network_interface {
-    index     = 1
-    subnet_id = yandex_vpc_subnet.devsubnet_1.id
+    subnet_id          = yandex_vpc_subnet.devsubnet_1.id
+    nat                = true
+    security_group_ids = [yandex_vpc_security_group.BASTION.id]
   }
 
   metadata = {
-    user-data          = data.template_file.cloud_config.rendered
+    user-data          = file("./cloud-init.yml")
     serial-port-enable = "1"
   }
 

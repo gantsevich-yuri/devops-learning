@@ -1,11 +1,51 @@
 ---
-# tasks file for myrole
-- name: Install Apache
+- name: Install apache
   ansible.builtin.package:
     name: apache2
     state: present
 
-- name: Create index.html file
-  ansible.builtin.file:
-      path: /home/{{ user }}/apache
-      state: file
+- name: Enable service apache
+  ansible.builtin.systemd_service:
+    name: apache2
+    enabled: true
+    state: started
+
+- name: Set new index.html file
+  ansible.builtin.template:
+    src: apache.conf.j2
+    dest: /var/www/html/index.html
+  notify:
+    - Restart apache2
+
+- name: Allow all access to tcp port 22
+  community.general.ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Allow all access to tcp port 80
+  community.general.ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Allow all outgoing traffic
+  community.general.ufw:
+    rule: allow
+    direction: "outgoing"
+
+- name: Block all incoming
+  community.general.ufw:
+    rule: deny
+    direction: "incoming"
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+
+- name: Check that you can connect (GET) to a page and it returns a status 200
+  ansible.builtin.uri:
+    url: http://{{ ansible_host }}
+    status_code: 200
+    remote_src: false
+  delegate_to: localhost

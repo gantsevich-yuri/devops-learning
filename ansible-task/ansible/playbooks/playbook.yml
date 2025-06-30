@@ -38,7 +38,7 @@
       content: |
         #!/bin/bash
         echo "Hostname:{{ ansible_facts['nodename'] }}"
-        echo "IP_addr:  {{ ansible_facts.all_ipv4_addresses | join(', ') }}"
+        echo "IP_addr:  {{ ansible_facts.all_ipv4_addresses[0] }}"
         echo "{{ welcome }}"
       dest: /etc/update-motd.d/01-mycustom-motd
       mode: '0755'
