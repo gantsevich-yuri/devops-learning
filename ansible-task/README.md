@@ -150,5 +150,7 @@ ansible <hostname or group_name> -m ping                       # Check connectio
 ansible-playbook <hostname or group_name>  
 ```
 
-### Screenshots
-[Result](https://docs.google.com/document/d/1KrDogewX8G2hU_a5boCF-zpUorL0bZW-VlITRTCsfSY/edit?usp=sharing)
+### Result
+[Screenshots](https://docs.google.com/document/d/1KrDogewX8G2hU_a5boCF-zpUorL0bZW-VlITRTCsfSY/edit?usp=sharing)
+[Ansible archive](https://drive.google.com/file/d/1xId-nPxjn5bKO8Sd3Con1VZRADJappMS/view?usp=sharing)
+
