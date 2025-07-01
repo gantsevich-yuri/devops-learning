@@ -40,6 +40,13 @@ resource "yandex_vpc_security_group" "BASTION" {
     port           = 22
   }
 
+  ingress {
+    protocol       = "TCP"
+    description    = "to bastion"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    port           = 80
+  }
+
   egress {
     protocol       = "ANY"
     description    = "from bastion"

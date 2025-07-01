@@ -32,12 +32,12 @@
 - name: Allow all outgoing traffic
   community.general.ufw:
     rule: allow
-    direction: "outgoing"
+    direction: "out"
 
 - name: Block all incoming
   community.general.ufw:
     rule: deny
-    direction: "incoming"
+    direction: "in"
 
 - name: Enable UFW
   community.general.ufw:
@@ -49,3 +49,4 @@
     status_code: 200
     remote_src: false
   delegate_to: localhost
+  become: false

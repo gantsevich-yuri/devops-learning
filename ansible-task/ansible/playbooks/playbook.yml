@@ -21,12 +21,13 @@
     ansible.builtin.unarchive:
       src: /home/{{ user }}/apache/kafka.tgz
       dest: /home/{{ user }}/apache/ 
+      remote_src: yes
   
   - name: Install tuned packet
     ansible.builtin.package:
       name: tuned
       state: present 
-  
+
   - name: Enable service tuned
     ansible.builtin.systemd_service:
       name: tuned
@@ -42,4 +43,3 @@
         echo "{{ welcome }}"
       dest: /etc/update-motd.d/01-mycustom-motd
       mode: '0755'
-

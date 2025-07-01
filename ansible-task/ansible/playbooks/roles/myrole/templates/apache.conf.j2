@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>It works!</title>
+</head>
+<body>
+    <h1>Host info</h1>
+    <p>CPU INFO (cores): {{ ansible_processor_count }}</p>
+    <p>MEMORY INFO (Mb): {{ ansible_memtotal_mb }}</p>
+    <p>DISK SIZE INFO (vda): {{ ansible_devices.vda.size }}</p>
+    <p>IP ADDR INFO: {{ ansible_host }}</p>
+</body>
+</html>

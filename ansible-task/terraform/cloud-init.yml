@@ -5,4 +5,4 @@ users:
     shell: /bin/bash
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPOed+sy3bqMgsKU8ilo+eN289OHlLUM1/xcQ2Ti9eU/ yuri@ubuntu-work
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcWmvMaqLLz21oRwKNRh+v143lcuAocua3h++gUbQnt yuri@ubuntu-home
