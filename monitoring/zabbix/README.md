@@ -12,6 +12,7 @@
 
 #### Требования к результатам 
 1. Прикрепите в файл README.md скриншот авторизации в админке.
+
 [webinterface](https://docs.google.com/document/d/1bpL1Cxu1Gdy5qBaHJ5skIj7AKOwxWwL6rrfBT3fqpXw/edit?usp=sharing)
 
 2. Приложите в файл README.md текст использованных команд в GitHub.
