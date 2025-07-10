@@ -13,7 +13,7 @@
 #### Требования к результатам 
 1. Прикрепите в файл README.md скриншот авторизации в админке.
 
-[webinterface](https://docs.google.com/document/d/1bpL1Cxu1Gdy5qBaHJ5skIj7AKOwxWwL6rrfBT3fqpXw/edit?usp=sharing)
+[Result](https://docs.google.com/document/d/1bpL1Cxu1Gdy5qBaHJ5skIj7AKOwxWwL6rrfBT3fqpXw/edit?usp=sharing)
 
 2. Приложите в файл README.md текст использованных команд в GitHub.
 ```
@@ -51,7 +51,16 @@ systemctl enable zabbix-server apache2  # autostart server and web
 1. Приложите в файл README.md скриншот раздела Configuration > Hosts, где видно, что агенты подключены к серверу
 2. Приложите в файл README.md скриншот лога zabbix agent, где видно, что он работает с сервером
 3. Приложите в файл README.md скриншот раздела Monitoring > Latest data для обоих хостов, где видны поступающие от агентов данные.
+
+[Result](https://docs.google.com/document/d/1bpL1Cxu1Gdy5qBaHJ5skIj7AKOwxWwL6rrfBT3fqpXw/edit?usp=sharing)
+
 4. Приложите в файл README.md текст использованных команд в GitHub
+```
+apt install zabbix-agent
+
+systemctl restart zabbix-agent
+systemctl enable zabbix-agent
+```
 
 ---
 ## Задание 3 со звёздочкой*
