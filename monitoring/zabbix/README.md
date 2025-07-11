@@ -18,11 +18,11 @@
 2. Приложите в файл README.md текст использованных команд в GitHub.
 ```
 sudo -s
-wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
-dpkg -i zabbix-release_latest_7.4+ubuntu24.04_all.deb
+wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu22.04_all.deb
+dpkg -i zabbix-release_latest_7.4+ubuntu22.04_all.deb
 apt update
 
-apt install zabbix-server-pgsql zabbix-frontend-php php8.4-pgsql zabbix-apache-conf zabbix-sql-scripts
+apt install zabbix-server-pgsql zabbix-frontend-php php8.1-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent postgresql
 
 sudo -u postgres createuser --pwprompt zabbix # create DB user
 sudo -u postgres createdb -O zabbix zabbix    # create DB 
@@ -56,7 +56,15 @@ systemctl enable zabbix-server apache2  # autostart server and web
 
 4. Приложите в файл README.md текст использованных команд в GitHub
 ```
+wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu22.04_all.deb
+dpkg -i zabbix-release_latest_7.4+ubuntu22.04_all.deb
+apt update
+
 apt install zabbix-agent
+
+vim /etc/zabbix/zabbix_agentd.conf
+Server=[ server_ip ] # set Zabbix server ip
+ServerActive=[ server_ip ] # set Zabbix server ip
 
 systemctl restart zabbix-agent
 systemctl enable zabbix-agent
@@ -69,6 +77,8 @@ systemctl enable zabbix-agent
 #### Требования к результатам
 1. Приложите в файл README.md скриншот раздела Latest Data, где видно свободное место на диске C:
 --- 
+
+[Result](https://docs.google.com/document/d/1bpL1Cxu1Gdy5qBaHJ5skIj7AKOwxWwL6rrfBT3fqpXw/edit?usp=sharing)
 
 ## Критерии оценки
 
