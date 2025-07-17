@@ -79,3 +79,50 @@
           - "9000:9000"
         env:
           SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+
+    - name: Set vm.max_map_count sysctl param
+      sysctl:
+        name: vm.max_map_count
+        value: 524288
+        state: present
+        reload: yes
+
+    - name: Set fs.file-max sysctl param
+      sysctl:
+        name: fs.file-max
+        value: 131072
+        state: present
+        reload: yes
+
+    - name: Persist sysctl settings for SonarQube
+      copy:
+        dest: /etc/sysctl.d/99-sonarqube.conf
+        content: |
+          vm.max_map_count=524288
+          fs.file-max=131072
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Set nofile and nproc limits for all users
+      copy:
+        dest: /etc/security/limits.d/99-sonarqube.conf
+        content: |
+          *          soft    nofile  131072
+          *          hard    nofile  131072
+          *          soft    nproc   8192
+          *          hard    nproc   8192
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Ensure PAM module for limits is enabled (Ubuntu)
+      lineinfile:
+        path: /etc/pam.d/common-session
+        regexp: '^session\s+required\s+pam_limits.so'
+        line: 'session required pam_limits.so'
+        state: present
+
+    - name: Reload sysctl (just in case)
+      command: sysctl --system
+      changed_when: false
