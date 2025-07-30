@@ -1,0 +1,114 @@
+# «Система мониторинга Prometheus»
+
+### Задание 1
+Установите Prometheus.
+
+#### Процесс выполнения
+1. Выполняя задание, сверяйтесь с процессом, отражённым в записи лекции
+2. Создайте пользователя prometheus
+3. Скачайте prometheus и в соответствии с лекцией разместите файлы в целевые директории
+4. Создайте сервис как показано на уроке
+5. Проверьте что prometheus запускается, останавливается, перезапускается и отображает статус с помощью systemctl
+
+#### Требования к результату
+- [ ] Прикрепите к файлу README.md скриншот systemctl status prometheus, где будет написано: prometheus.service — Prometheus Service Netology Lesson 9.4 — [Ваши ФИО]
+
+# Install and run
+```
+wget https://github.com/prometheus/prometheus/releases/download/v3.5.0/prometheus-3.5.0.linux-amd64.tar.gz
+tar xvzf prometheus-3.5.0.linux-amd64.tar.gz 
+cd prometheus-3.5.0.linux-amd64/
+
+sudo useradd --no-create-home --shell /bin/false prometheus
+sudo mkdir /etc/prometheus
+sudo mkdir /var/lib/prometheus
+sudo cp prometheus promtool /usr/local/bin/
+sudo cp prometheus.yml /etc/prometheus/
+
+sudo chown prometheus:prometheus /usr/local/bin/prometheus
+sudo chown prometheus:prometheus /usr/local/bin/promtool
+sudo chown -R prometheus:prometheus /etc/prometheus/
+
+sudo -u prometheus prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus/  #manual run 
+```
+
+# Automation run
+
+/etc/systemd/system/prometheus.service
+```
+[Unit]
+Description=My Prometheus service
+After=network.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=prometheus \
+--config.file /etc/prometheus/prometheus.yml \
+--storage.tsdb.path /var/lib/prometheus/
+ExecReload=/bin/kill -HUP $MAINPID Restart=on-failure
+
+[Install]
+WantedBy=graphical.target
+
+```
+
+```
+systemctl enable prometheus.service
+systemctl start prometheus.service
+systemctl daemon-reload
+systemctl status prometheus.service
+```
+
+---
+
+### Задание 2
+Установите Node Exporter.
+
+#### Процесс выполнения
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+3. Скачайте node exporter приведённый в презентации и в соответствии с лекцией разместите файлы в целевые директории
+4. Создайте сервис для как показано на уроке
+5. Проверьте что node exporter запускается, останавливается, перезапускается и отображает статус с помощью systemctl
+
+#### Требования к результату
+- [ ] Прикрепите к файлу README.md скриншот systemctl status node-exporter, где будет написано: node-exporter.service — Node Exporter Netology Lesson 9.4 — [Ваши ФИО]
+
+---
+
+### Задание 3
+Подключите Node Exporter к серверу Prometheus.
+
+#### Процесс выполнения
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+2. Отредактируйте prometheus.yaml, добавив в массив таргетов установленный в задании 2 node exporter
+3. Перезапустите prometheus
+4. Проверьте что он запустился
+
+#### Требования к результату
+- [ ] Прикрепите к файлу README.md скриншот конфигурации из интерфейса Prometheus вкладки Status > Configuration
+- [ ] Прикрепите к файлу README.md скриншот из интерфейса Prometheus вкладки Status > Targets, чтобы было видно минимум два эндпоинта
+
+---
+## Дополнительные задания со звёздочкой*
+Эти задания дополнительные. Их можно не выполнять. Это не повлияет на зачёт. Вы можете их выполнить, если хотите глубже разобраться в материале.
+
+---
+
+### Задание 4*
+Установите Grafana.
+
+#### Требования к результату
+- [ ] Прикрепите к файлу README.md скриншот левого нижнего угла интерфейса, чтобы при наведении на иконку пользователя были видны ваши ФИО
+
+---
+
+### Задание 5*
+Интегрируйте Grafana и Prometheus.
+
+---
+
+## Result :white_check_mark:
+
+[Prometheus part 1](https://github.com/gantsevich-yuri/rsschool-devops-course-tasks/pull/7)
