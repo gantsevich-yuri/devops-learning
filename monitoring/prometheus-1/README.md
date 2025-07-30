@@ -13,7 +13,7 @@
 #### Требования к результату
 - [ ] Прикрепите к файлу README.md скриншот systemctl status prometheus, где будет написано: prometheus.service — Prometheus Service Netology Lesson 9.4 — [Ваши ФИО]
 
-# Install and run
+#### Install and run
 ```
 wget https://github.com/prometheus/prometheus/releases/download/v3.5.0/prometheus-3.5.0.linux-amd64.tar.gz
 tar xvzf prometheus-3.5.0.linux-amd64.tar.gz 
@@ -32,7 +32,7 @@ sudo chown -R prometheus:prometheus /etc/prometheus/
 sudo -u prometheus prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus/  #manual run 
 ```
 
-# Automation run
+#### Automation run
 
 /etc/systemd/system/prometheus.service
 ```
