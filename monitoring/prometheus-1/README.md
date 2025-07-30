@@ -111,4 +111,4 @@ systemctl status prometheus.service
 
 ## Result :white_check_mark:
 
-[Prometheus part 1](https://github.com/gantsevich-yuri/rsschool-devops-course-tasks/pull/7)
+[Prometheus part 1](https://docs.google.com/document/d/1QHFS9NVB4ZaMxncl6dfHh8be9C2D-h8okv3XM5xPLLc/edit?usp=sharing)
