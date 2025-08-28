@@ -19,9 +19,9 @@
 #### Требования к результату
 - Прикрепите в файл README.md скриншот страницы шаблона с названием «Задание 1»
 
-![pattern](/home/yuri/Downloads/task1-1.png)
+![pattern](task1-1.png)
 
-![item](/home/yuri/Downloads/task1-2.png)
+![item](task1-2.png)
 
  ---
 
