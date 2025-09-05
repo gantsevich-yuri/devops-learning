@@ -169,4 +169,4 @@ backend back2
 
 ## Result in Google Docs :white_check_mark:
 
-[Loadbalancer](https://docs.google.com/document/d/10h1YnYZCFbrbbmmhxDm4eqiOHmPC_YQ9dvt_H16to14/edit?usp=sharing)
+[Nginx + HAproxy](https://docs.google.com/document/d/10h1YnYZCFbrbbmmhxDm4eqiOHmPC_YQ9dvt_H16to14/edit?usp=sharing)
