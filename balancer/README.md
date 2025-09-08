@@ -20,19 +20,7 @@ python3 -m http.server 9999 --bind 0.0.0.0
 ```
 
 #### loadbalancer config:
-```
-frontend tcp
-        mode tcp
-        option tcplog
-        bind *:8080
-        default_backend pythons_servers
-
-backend pythons_servers
-        mode tcp
-        balance roundrobin
-        server s1 0.0.0.0:8888
-        server s2 0.0.0.0:9999
-```
+![task1](task1.cfg)
 
 #### check loadbalancer:
 ```
