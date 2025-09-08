@@ -20,7 +20,7 @@ python3 -m http.server 9999 --bind 0.0.0.0
 ```
 
 #### loadbalancer config:
-![https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task1.cfg](task1.cfg)
+[task1.cfg](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task1.cfg)
 
 #### check loadbalancer:
 ```
