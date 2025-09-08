@@ -39,6 +39,8 @@ backend pythons_servers
 curl -I localhost:8080
 ```
 
+![task1](task1.png)
+
 ### Задание 2
 - Запустите три simple python сервера на своей виртуальной машине на разных портах
 - Настройте балансировку Weighted Round Robin на 7 уровне, чтобы первый сервер имел вес 2, второй - 3, а третий - 4
@@ -77,6 +79,8 @@ backend pythons_servers_tcp
 ```
 curl -I -H "Host: example.local" localhost
 ```
+
+![task2](task2.png)
 
 ---
 
@@ -131,6 +135,7 @@ backend pythons_servers_tcp
         server s2 0.0.0.0:9999
 ```
 
+![task3](task3.png)
 
 ---
 
@@ -164,6 +169,8 @@ backend back2
         server s1 0.0.0.0:8888 check
         server s2 0.0.0.0:9999 check
 ```
+
+![task4](task4.png)
 
 ------
 
