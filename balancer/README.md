@@ -36,32 +36,7 @@ curl -I localhost:8080
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy c использованием домена example.local и без него.
 
 #### loadbalancer config:
-```
-frontend tcp
-        mode tcp
-        option tcplog
-        bind *:8080
-        default_backend pythons_servers_tcp
-
-frontend http
-        mode http
-        bind *:80
-        acl ACL_example.local hdr(host) -i example.local
-        use_backend example.local if ACL_example.local
-
-backend example.local
-        mode http
-        balance roundrobin
-        server s1 0.0.0.0:7777 check weight 2
-        server s2 0.0.0.0:8888 check weight 3
-        server s3 0.0.0.0:9999 check weight 4
-
-backend pythons_servers_tcp
-        mode tcp
-        balance roundrobin
-        server s1 0.0.0.0:8888
-        server s2 0.0.0.0:9999
-```
+[task2.cfg](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task2.cfg)
 
 #### check loadbalancer:
 ```
@@ -78,50 +53,10 @@ curl -I -H "Host: example.local" localhost
 - На проверку направьте конфигурационные файлы nginx, HAProxy, скриншоты с запросами jpg картинок и других файлов на Simple Python Server, демонстрирующие корректную настройку.
 
 #### nginx config:
-```
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-
-        server_name _;
-
-        location ~ \.(jpg)$ {
-                root /var/www/html/pictures;
-        }
-
-        location / {
-                proxy_pass http://127.0.0.1:8081/;
-        }
-}
-```
+[task3_nginx.cfg](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task3_nginx.cfg)
 
 #### HAproxy config:
-```
-frontend tcp
-        mode tcp
-        option tcplog
-        bind *:8080
-        default_backend pythons_servers_tcp
-
-frontend http
-        mode http
-        bind *:8081
-        use_backend pythons_servers_http
-
-backend pythons_servers_http
-        mode http
-        balance roundrobin
-        server s1 0.0.0.0:8888 check weight 2
-        server s2 0.0.0.0:9999 check weight 1
-
-backend pythons_servers_tcp
-        mode tcp
-        balance roundrobin
-        server s1 0.0.0.0:8888
-        server s2 0.0.0.0:9999
-```
+[task3_ha.cfg](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task3_ha.cfg)
 
 ![task3](task3.png)
 
@@ -136,27 +71,7 @@ backend pythons_servers_tcp
 - На проверку направьте конфигурационный файл HAProxy, скриншоты, демонстрирующие запросы к разным фронтендам и ответам от разных бэкендов.
 
 #### HAproxy config:
-```
-frontend http
-        mode http
-        bind *:8081
-        acl ACL_example1.local hdr(host) -i example1.local
-        acl ACL_example2.local hdr(host) -i example2.local
-        use_backend back1 if ACL_example1.local
-        use_backend back2 if ACL_example2.local
-
-backend back1
-        mode http
-        balance roundrobin
-        server s1 0.0.0.0:6666 check
-        server s2 0.0.0.0:7777 check
-
-backend back2
-        mode http
-        balance roundrobin
-        server s1 0.0.0.0:8888 check
-        server s2 0.0.0.0:9999 check
-```
+[task4.cfg](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task4.cfg)
 
 ![task4](task4.png)
 
