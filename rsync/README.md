@@ -35,12 +35,11 @@ rsync -avc --exclude '.*' --delete . /tmp/backup
 - На проверку направить файл crontab и скриншот с результатом работы утилиты.
 
 #### backup script:
-[backup.py](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task2.cfg)
+[backup.py](https://github.com/gantsevich-yuri/devops-learning/blob/main/rsync/backup.py)
 
 #### crontab file:
-```
-[crontab](https://github.com/gantsevich-yuri/devops-learning/blob/main/balancer/task2.cfg)
-```
+[crontab](https://github.com/gantsevich-yuri/devops-learning/blob/main/rsync/crontab)
+
 
 ![task2-1](task2-1.png)
 ![task2-2](task2-2.png)
