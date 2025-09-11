@@ -22,7 +22,7 @@
 
 1. Теперь вместо одной виртуальной машины сделайте terraform playbook, который:
 
-- создаст 2 идентичные виртуальные машины. Используйте аргумент [count](https://www.terraform.io/docs/language/meta-arguments/count.html) для создания таких ресурсов;
+- создаст 2 идентичные виртуальные машины. Используйте аргумент [count](https://www.terraform.io/docs/language/meta-arguments/count.html) для создания таких ресурсов или for_each;
 - создаст [таргет-группу](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/lb_target_group). Поместите в неё созданные на шаге 1 виртуальные машины;
 - создаст [сетевой балансировщик нагрузки](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/lb_network_load_balancer), который слушает на порту 80, отправляет трафик на порт 80 виртуальных машин и http healthcheck на порт 80 виртуальных машин.
 
@@ -50,38 +50,3 @@
 *3. Скриншот страницы, которая открылась при запросе IP-адреса балансировщика.*
 
 ![nginx](nginx.png)
-
-
-## Задание 2*
-
-1. Теперь вместо создания виртуальных машин создайте [группу виртуальных машин с балансировщиком нагрузки](https://cloud.yandex.ru/docs/compute/operations/instance-groups/create-with-balancer).
-
-2. Nginx нужно будет поставить тоже автоматизированно. Для этого вам нужно будет подложить файл установки Nginx в user-data-ключ [метадаты](https://cloud.yandex.ru/docs/compute/concepts/vm-metadata) виртуальной машины.
-
-- [Пример файла установки Nginx](https://github.com/nar3k/yc-public-tasks/blob/master/terraform/metadata.yaml).
-- [Как подставлять файл в метадату виртуальной машины.](https://github.com/nar3k/yc-public-tasks/blob/a6c50a5e1d82f27e6d7f3897972adb872299f14a/terraform/main.tf#L38)
-
-3. Перейдите в веб-консоль Yandex Cloud и убедитесь, что: 
-
-- созданный балансировщик находится в статусе Active,
-- обе виртуальные машины в целевой группе находятся в состоянии healthy.
-
-4. Сделайте запрос на 80 порт на внешний IP-адрес балансировщика и убедитесь, что вы получаете ответ в виде дефолтной страницы Nginx.
-
-*В качестве результата пришлите*
-
-*1. Terraform Playbook.*
-
-*2. Скриншот статуса балансировщика и целевой группы.*
-
-*3. Скриншот страницы, которая открылась при запросе IP-адреса балансировщика.*
-
-#### backup script:
-[backup.py](https://github.com/gantsevich-yuri/devops-learning/blob/main/rsync/backup.py)
-
-#### crontab file:
-[crontab](https://github.com/gantsevich-yuri/devops-learning/blob/main/rsync/crontab)
-
-
-![task2-1](task2-1.png)
-![task2-2](task2-2.png)
