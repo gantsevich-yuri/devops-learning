@@ -41,11 +41,14 @@
 
 *1. Terraform Playbook.*
 
+[terraform playbook](https://github.com/gantsevich-yuri/devops-learning/tree/main/balancer-yacloud/terraform)
+
 *2. Скриншот статуса балансировщика и целевой группы.*
+
+![loadbalancer](lb.png)
 
 *3. Скриншот страницы, которая открылась при запросе IP-адреса балансировщика.*
 
-![loadbalancer](lb.png)
 ![nginx](nginx.png)
 
 
