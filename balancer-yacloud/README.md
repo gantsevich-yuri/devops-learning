@@ -45,11 +45,8 @@
 
 *3. Скриншот страницы, которая открылась при запросе IP-адреса балансировщика.*
 
-```
-rsync -avc --exclude '.*' --delete . /tmp/backup
-```
-
-![task1](task1.png)
+![loadbalancer](lb.png)
+![nginx](nginx.png)
 
 
 ## Задание 2*

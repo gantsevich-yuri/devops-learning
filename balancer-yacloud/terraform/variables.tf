@@ -1,10 +1,10 @@
 locals {
   instances = {
-    web-a = {
+    vm-a = {
       zone = "ru-central1-a"
       cidr = "10.0.1.0/24"
     }
-    web-b = {
+    vm-b = {
       zone = "ru-central1-b"
       cidr = "10.0.2.0/24"
     }
@@ -12,8 +12,8 @@ locals {
 }
 
 variable "cloud_id" {
-    type = string
+  type = string
 }
 variable "folder_id" {
-    type = string
+  type = string
 }
