@@ -4,7 +4,7 @@
 **/terraform.tfvars
 
 # ELK
-**/ELK/elastik*
+**/ELK/elastic*
 !**/ELK/logstash.conf
 **/ELK/logstash*
 **/ELK/nginx*
