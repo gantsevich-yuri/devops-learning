@@ -44,8 +44,9 @@ services:
      - "./nginx/log:/usr/share/logstash/nginx/log:ro"
    environment:
      - xpack.monitoring.enabled=false
-     - ELASTIC_HOSTS=${ELASTIC_HOST}
+     - ELASTIC_HOSTS=${ELASTIC_HOSTS}
    mem_limit: ${LS_MEM_LIMIT}
+   restart: on-failure
    depends_on:
      - elasticsearch
      - nginx
@@ -61,7 +62,6 @@ services:
 # filebeat:
   #   image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
   #   command: --strict.perms=false
-  #   user: root
   #   volumes:
   #     - /projects/test/filebeat.yml:/usr/share/filebeat/filebeat.yml
   #     - /var/lib/docker:/var/lib/docker:ro
