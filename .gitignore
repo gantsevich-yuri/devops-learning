@@ -5,6 +5,6 @@
 
 # ELK
 **/ELK/elastic*
-!**/ELK/logstash.conf
 **/ELK/logstash*
 **/ELK/nginx*
+!**/ELK/logstash.conf
