@@ -1,0 +1,11 @@
+filebeat.inputs:
+ - type: filestream
+   enabled: true
+   id: my-nginx-logs
+   paths:
+     - /usr/share/logstash/nginx/log/*.log
+
+output.elasticsearch:
+  hosts: ["${ELASTIC_HOSTS}"]
+  indices:
+    - index: "log-nginx-%{+yyyy.MM.dd}"

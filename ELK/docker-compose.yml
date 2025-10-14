@@ -33,23 +33,23 @@ services:
     depends_on:
       - elasticsearch
 
-  logstash:
-   image: logstash:${STACK_VERSION}
-   labels:
-     co.elastic.logs/module: logstash
-   volumes:
-     - "./logstashdata:/usr/share/logstash/data"
-     - "./logstash_ingest_data:/usr/share/logstash/ingest_data/"
-     - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
-     - "./nginx/log:/usr/share/logstash/nginx/log:ro"
-   environment:
-     - xpack.monitoring.enabled=false
-     - ELASTIC_HOSTS=${ELASTIC_HOSTS}
-   mem_limit: ${LS_MEM_LIMIT}
-   restart: on-failure
-   depends_on:
-     - elasticsearch
-     - nginx
+  # logstash:
+  #  image: logstash:${STACK_VERSION}
+  #  labels:
+  #    co.elastic.logs/module: logstash
+  #  volumes:
+  #    - "./logstashdata:/usr/share/logstash/data"
+  #    - "./logstash_ingest_data:/usr/share/logstash/ingest_data/"
+  #    - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+  #    - "./nginx/log:/usr/share/logstash/nginx/log:ro"
+  #  environment:
+  #    - xpack.monitoring.enabled=false
+  #    - ELASTIC_HOSTS=${ELASTIC_HOSTS}
+  #  mem_limit: ${LS_MEM_LIMIT}
+  #  restart: on-failure
+  #  depends_on:
+  #    - elasticsearch
+  #    - nginx
 
   nginx:
     image: nginx:${NGINX_VERSION}
@@ -59,13 +59,17 @@ services:
     - "./nginx/log/access.log:/var/log/nginx/access.log"
     - "./nginx/log/error.log:/var/log/nginx/error.log"
 
-# filebeat:
-  #   image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
-  #   command: --strict.perms=false
-  #   volumes:
-  #     - /projects/test/filebeat.yml:/usr/share/filebeat/filebeat.yml
-  #     - /var/lib/docker:/var/lib/docker:ro
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  filebeat:
+    image: elastic/filebeat:${STACK_VERSION}
+    command: --strict.perms=false
+    environment:
+      - ELASTIC_HOSTS=${ELASTIC_HOST}
+    volumes:
+      - "./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "./nginx/log:/usr/share/logstash/nginx/log:ro"
+    depends_on:
+      - elasticsearch
+      - nginx
 
 volumes:
   elasticsearch-data:
