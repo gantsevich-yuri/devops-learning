@@ -1,0 +1,17 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.2.0
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    configs:
+      - source: rabbitmq-plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - /var/log/rabbitmq:/var/log/rabbitmq
+
+configs:
+  rabbitmq-plugins:
+    content: "[rabbitmq_management]."  
