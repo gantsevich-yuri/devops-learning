@@ -19,10 +19,6 @@
 Для работы скриптов вам необходимо установить Python версии 3 и библиотеку Pika.
 Также в скриптах нужно указать IP-адрес машины, на которой запущен RabbitMQ, заменив localhost на нужный IP.
 
-```shell script
-$ pip install pika
-```
-
 Зайдите в веб-интерфейс, найдите очередь под названием hello и сделайте скриншот.
 После чего запустите второй скрипт consumer.py и сделайте скриншот результата выполнения скрипта
 
@@ -30,6 +26,9 @@ $ pip install pika
 
 Для закрепления материала можете попробовать модифицировать скрипты, чтобы поменять название очереди и отправляемое сообщение.
 
+![task2-1](task2-1.png)
+
+![task2-2](task2-2.png)
 ---
 
 ### Задание 3. Подготовка HA кластера
@@ -49,29 +48,89 @@ $ cat /etc/hosts
 
 *В качестве решения домашнего задания приложите скриншоты из веб-интерфейса с информацией о доступных нодах в кластере и включённой политикой.*
 
+![task3-1](task3-1.png)
+
+
 Также приложите вывод команды с двух нод:
 
-```shell script
-$ rabbitmqctl cluster_status
+```
+root@rabbitmq1:/# rabbitmqctl cluster_status
+Cluster status of node rabbit@rabbitmq1 ...
+Basics
+
+Cluster name: my-rabbit-cluster
+Total CPU cores available cluster-wide: 8
+
+Disk Nodes
+
+rabbit@rabbitmq1
+rabbit@rabbitmq2
+
+Running Nodes
+
+rabbit@rabbitmq1
+rabbit@rabbitmq2
+
+Versions
+
+rabbit@rabbitmq1: RabbitMQ 3.13.7 on Erlang 26.2.5.15
+rabbit@rabbitmq2: RabbitMQ 3.13.7 on Erlang 26.2.5.15
+
+CPU Cores
+
+Node: rabbit@rabbitmq1, available CPU cores: 4
+Node: rabbit@rabbitmq2, available CPU cores: 4
+
+Maintenance status
+
+Node: rabbit@rabbitmq1, status: not under maintenance
+Node: rabbit@rabbitmq2, status: not under maintenance
+
+Alarms
+
+(none)
 ```
 
-Для закрепления материала снова запустите скрипт producer.py и приложите скриншот выполнения команды на каждой из нод:
+```
+root@rabbitmq2:/# rabbitmqctl cluster_status
+Cluster status of node rabbit@rabbitmq2 ...
+Basics
 
-```shell script
-$ rabbitmqadmin get queue='hello'
+Cluster name: my-rabbit-cluster
+Total CPU cores available cluster-wide: 8
+
+Disk Nodes
+
+rabbit@rabbitmq1
+rabbit@rabbitmq2
+
+Running Nodes
+
+rabbit@rabbitmq1
+rabbit@rabbitmq2
+
+Versions
+
+rabbit@rabbitmq2: RabbitMQ 3.13.7 on Erlang 26.2.5.15
+rabbit@rabbitmq1: RabbitMQ 3.13.7 on Erlang 26.2.5.15
+
+CPU Cores
+
+Node: rabbit@rabbitmq2, available CPU cores: 4
+Node: rabbit@rabbitmq1, available CPU cores: 4
+
+Maintenance status
+
+Node: rabbit@rabbitmq2, status: not under maintenance
+Node: rabbit@rabbitmq1, status: not under maintenance
+
+Alarms
+
+(none)
 ```
 
 После чего попробуйте отключить одну из нод, желательно ту, к которой подключались из скрипта, затем поправьте параметры подключения в скрипте consumer.py на вторую ноду и запустите его.
 
 *Приложите скриншот результата работы второго скрипта.*
 
-
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
-
-### * Задание 4. Ansible playbook
-
-Напишите плейбук, который будет производить установку RabbitMQ на любое количество нод и объединять их в кластер.
-При этом будет автоматически создавать политику ha-all.
-
-*Готовый плейбук разместите в своём репозитории.*
+![task3-2](task3-2.png)
