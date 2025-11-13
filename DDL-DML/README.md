@@ -31,13 +31,19 @@ mysql -h localhost -u sys_temp -pP@ssw0rd
 ```sql
 ALTER USER 'sys_test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
+
 1.6. По ссылке https://downloads.mysql.com/docs/sakila-db.zip скачайте дамп базы данных.
 
 1.7. Восстановите дамп в базу данных.
+```
+mysql -u sys_temp -pP@ssw0rd < sakila-data.sql
+```
 
 1.8. При работе в IDE сформируйте ER-диаграмму получившейся базы данных. При работе в командной строке используйте команду для получения всех таблиц базы данных. (скриншот)
-
+![task1-3](task1-3.png)
+![task1-4](task1-4.png)
 *Результатом работы должны быть скриншоты обозначенных заданий, а также простыня со всеми запросами.*
+
 
 
 ### Задание 2
