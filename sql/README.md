@@ -43,6 +43,7 @@ JOIN city c ON adr.city_id = c.city_id;
 SELECT COUNT(*) FROM film 
 WHERE `length` > (SELECT AVG(length) FROM film);
 ```
+![task2](task2.png)
 
 ### Задание 3
 
