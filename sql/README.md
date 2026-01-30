@@ -39,6 +39,10 @@ JOIN city c ON adr.city_id = c.city_id;
 ### Задание 2
 
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
+```
+SELECT COUNT(*) FROM film 
+WHERE `length` > (SELECT AVG(length) FROM film);
+```
 
 ### Задание 3
 
