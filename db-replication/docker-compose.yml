@@ -1,0 +1,31 @@
+services:
+  db_master:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: my_db
+    volumes:
+      #- ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./init-db-master.sh:/docker-entrypoint-initdb.d/init-db-master.sh
+    #command: -c hba_file=/etc/postgresql/pg_hba.conf
+    ports:
+      - 5432:5432
+  db_slave:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: my_db
+    volumes:
+      #- ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./init-db-slave.sh:/docker-entrypoint-initdb.d/init-db-slave.sh
+    #command: -c hba_file=/etc/postgresql/pg_hba.conf
+    depends_on:
+      - db_master
+    ports:
+      - 5433:5432   
