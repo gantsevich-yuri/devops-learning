@@ -127,3 +127,7 @@ shops(id, city, category)
 
 Шардирование выполнено на примере таблицы Users.
 
+**[Configuration](https://github.com/gantsevich-yuri/devops-learning/tree/main/db-sharding/configuration)**
+
+![result](result.png)
+
