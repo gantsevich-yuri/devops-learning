@@ -52,9 +52,7 @@ docker run -d -p80:80 fox4kids/custom-nginx:1.0.0
 - Предоставьте ответ в виде ссылки на https://hub.docker.com/<username_repo>/custom-nginx/general .
 
 Result
-```
 https://hub.docker.com/repository/docker/fox4kids/custom-nginx/general
-```
 
 
 ## Задача 2
