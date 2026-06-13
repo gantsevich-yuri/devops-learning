@@ -119,6 +119,40 @@ networks:
 
 6. Остановите проект. В качестве ответа приложите скриншот sql-запроса.
 
+compose.yaml
+```
+include:
+  - ./proxy.yaml
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile.python
+    container_name: web
+    networks:
+      backend:
+        ipv4_address: 172.20.0.5
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: mysql
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_server
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      backend:
+        ipv4_address: 172.20.0.10
+```
+
 ## Задача 4
 1. Запустите в Yandex Cloud ВМ (вам хватит 2 Гб Ram).
 2. Подключитесь к Вм по ssh и установите docker.
