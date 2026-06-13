@@ -164,9 +164,39 @@ volumes:
 1. Запустите в Yandex Cloud ВМ (вам хватит 2 Гб Ram).
 2. Подключитесь к Вм по ssh и установите docker.
 3. Напишите bash-скрипт, который скачает ваш fork-репозиторий в каталог /opt и запустит проект целиком.
+
+```
+#!/bin/bash
+
+set -e
+
+cd /opt
+git clone https://github.com/gantsevich-yuri/shvirtd-example-python.git
+echo "Repo is cloning"
+
+cd shvirtd-example-python
+docker compose up -d
+echo "Services are starting"
+```
+
 4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и запустите проверку вашего сервиса ```http://<внешний_IP-адрес_вашей_ВМ>:8090```. Таким образом трафик будет направлен в ingress-proxy. Трафик должен пройти через цепочки: Пользователь → Internet → Nginx → HAProxy → FastAPI(запись в БД) → HAProxy → Nginx → Internet → Пользователь
 5. (Необязательная часть) Дополнительно настройте remote ssh context к вашему серверу. Отобразите список контекстов и результат удаленного выполнения ```docker ps -a```
+
+```
+docker context create yacloud --docker "host=ssh://fox@81.26.184.238"
+docker context use yacloud
+docker ps -a
+```
+
+![task4_1](task4_1.png)
+
 6. Повторите SQL-запрос на сервере и приложите скриншот и ссылку на fork.
+
+```
+https://github.com/gantsevich-yuri/shvirtd-example-python
+```
+
+![task4_2](task4_2.png)
 
 ## Задача 5 (*)
 1. Напишите и задеплойте на вашу облачную ВМ bash скрипт, который произведет резервное копирование БД mysql в директорию "/opt/backup" с помощью запуска в сети "backend" контейнера из образа ```schnitzler/mysqldump``` при помощи ```docker run ...``` команды. Подсказка: "документация образа."
