@@ -204,6 +204,25 @@ https://github.com/gantsevich-yuri/shvirtd-example-python
 3. Настройте выполнение скрипта раз в 1 минуту через cron, crontab или systemctl timer. Придумайте способ не светить логин/пароль в git!!
 4. Предоставьте скрипт, cron-task и скриншот с несколькими резервными копиями в "/opt/backup"
 
+script 
+
+```
+#!/bin/bash
+
+now=$(date +"%s_%Y-%m-%d")
+
+docker run --rm --entrypoint "" -v /opt/backup:/backup --network=shvirtd-example-python_backend --link="mysql_server:alias" mysql:8 mysqldump --opt -h alias -u app -p"QwErTy1234" "--result-file=/backup/${now}_dumps.sql" virtd
+```
+
+cron
+
+```
+* * * * * fox /home/fox/db_bkp.sh
+```
+
+![task5](task5.png)
+
+
 ## Задача 6
 Скачайте docker образ ```hashicorp/terraform:latest``` и скопируйте бинарный файл ```/bin/terraform``` на свою локальную машину, используя dive и docker save.
 Предоставьте скриншоты  действий .
