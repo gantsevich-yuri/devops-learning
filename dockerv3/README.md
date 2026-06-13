@@ -227,6 +227,31 @@ cron
 Скачайте docker образ ```hashicorp/terraform:latest``` и скопируйте бинарный файл ```/bin/terraform``` на свою локальную машину, используя dive и docker save.
 Предоставьте скриншоты  действий .
 
+```
+# install dive
+wget https://github.com/wagoodman/dive/releases/download/v0.13.1/dive_0.13.1_linux_amd64.deb
+sudo dpkg -i dive_0.13.1_linux_amd64.deb
+
+docker pull hashicorp/terraform:latest
+
+# learn layers and save digest 
+dive hashicorp/terraform:latest
+# Digest: sha256:48ea08252d61828f82e2d7811bd23aeb25bd8b790be3b425425960b0834ebb7d)
+
+docker save hashicorp/terraform:latest -o terraform-image.tar
+mkdir terraform_unpack
+tar -xf terraform-image.tar -C terraform_unpack/
+cd terraform_unpack/
+```
+
 ## Задача 6.1
 Добейтесь аналогичного результата, используя docker cp.  
 Предоставьте скриншоты  действий .
+
+```
+docker create --name terraform_temp hashicorp/terraform:latest
+docker cp terraform_temp:/bin/terraform ./terraform
+./terraform --version
+```
+
+![task6_1](task6_1.png)
